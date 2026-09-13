@@ -1,0 +1,27 @@
+export enum STATUS_CODE {
+  OK = 200,
+  CREATED = 201,
+  NO_CONTENT = 204,
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  FORBIDDEN = 403,
+  NOT_FOUND = 404,
+  NOT_ACCEPTABLE = 406,
+  INTERNAL_SERVER_ERROR = 500,
+  NOT_IMPLEMENTED = 501,
+  BAD_GATEWAY = 502,
+}
+
+export const Codes = new Map([
+  [STATUS_CODE.OK, "OK"],
+  [STATUS_CODE.CREATED, "Created"],
+  [STATUS_CODE.NO_CONTENT, "No Content"],
+  [STATUS_CODE.BAD_REQUEST, "Bad Request"],
+  [STATUS_CODE.UNAUTHORIZED, "Unauthorized"],
+  [STATUS_CODE.FORBIDDEN, "Forbidden"],
+  [STATUS_CODE.NOT_FOUND, "Not Found"],
+  [STATUS_CODE.NOT_ACCEPTABLE, "Not Acceptable"],
+  [STATUS_CODE.INTERNAL_SERVER_ERROR, "Internal Server Error"],
+  [STATUS_CODE.NOT_IMPLEMENTED, "Not Implemented"],
+  [STATUS_CODE.BAD_GATEWAY, "Bad Gateway"],
+]);

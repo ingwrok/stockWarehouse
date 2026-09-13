@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Fastify App",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "tsx",
+        "--env-file=${workspaceFolder}/configs/dev.env",
+        "${workspaceFolder}/src/index.ts"
+      ],
+      "console": "integratedTerminal"
+    }
+  ]
+}
