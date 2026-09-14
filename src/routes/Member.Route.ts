@@ -20,6 +20,18 @@ export default (server: FastifyInstance, options: any, done: any) => {
 
 	server.route({
 		method: "GET",
+		url: "/members/history/:id",
+		preHandler: [Authentication.validate],
+		schema: {
+			params: paramId
+		},
+		handler: async ( request: FastifyRequest, reply: FastifyReply ) => {
+			return await MemberController.history(request, reply);
+		},
+	});
+
+	server.route({
+		method: "GET",
 		url: "/members/:id",
 		preHandler: [Authentication.validate],
 		schema: {

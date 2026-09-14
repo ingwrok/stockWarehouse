@@ -24,7 +24,7 @@ export class TransactionService {
 
 		const {username, savedTransaction, items} = await TransactionRepository.create(uniqueIds, itemMap, cashierId, data.phone);
 
-		return ({
+		return {
 			id: savedTransaction.id,
 			username: username,
 			discountAmount: savedTransaction.discount_amount,
@@ -35,7 +35,7 @@ export class TransactionService {
 				name: item.name,
 				quantity: item.quantity
 			}))
-		});
+		};
 	}
 
 	static async summary(data: TTransactionSummaryQuery):Promise<TTransactyionSummary> {
@@ -96,7 +96,7 @@ export class TransactionService {
 			throw ErrorHandler.notFound("transaction not found!!");
 		}
 
-		return ({
+		return {
 			id: transaction.id,
 			username: transaction.member?.username ?? null,
 			discountAmount: transaction.discount_amount,
@@ -107,7 +107,7 @@ export class TransactionService {
 				name: item.product.name,
 				quantity: item.quantity
 			}))
-		});
+		};
 	}
 
 	static async delete( id: number, cashierId: number ):Promise<TSuccess> {

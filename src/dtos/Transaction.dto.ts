@@ -1,4 +1,3 @@
-import { Member } from "../entities/Member";
 import { Transaction } from "../entities/Transaction";
 import { PickRename } from "./@Base.dto";
 

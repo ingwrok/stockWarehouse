@@ -1,8 +1,10 @@
 import ErrorHandler from "../utils/responseHandler/errorHanlder";
 import { Member } from "../entities/Member";
 import { TUserQuery } from "../schemas/Member.Schema";
-import { TMember } from "../dtos/Member.dto";
+import { TMember, TMemberHistory, TTransactionWithoutUsername } from "../dtos/Member.dto";
 import { TSuccess } from "../dtos/@Base.dto";
+import TransactionRepository from "../repositories/Transaction.Repository";
+import { TProductItem } from "../dtos/Transaction.dto";
 
 
 export class MemberService {
@@ -20,13 +22,43 @@ export class MemberService {
 
     await member.save()
 
-		return ({
+		return {
       id: member.id,
 			username: member.username,
 			phone: member.phone,
 			points: member.points,
 			createdAt: member.created_at
-    });
+    };
+	}
+
+	static async history(id: number):Promise<TMemberHistory> {
+		const member = await Member.repository().findOne({
+			where: {
+				id
+			}
+		})
+
+    if (!member) {
+      throw ErrorHandler.notFound("Member not found");
+    }
+
+		const transactions = await TransactionRepository.getByMemberId(id)
+
+		return {
+			username: member.username,
+			totalPoints: member.points,
+			transactions: transactions.map((item):TTransactionWithoutUsername => ({
+				id: item.id,
+				discountAmount: item.discount_amount,
+				earnedPoint: item.earned_point,
+				finalPrice: item.final_price,
+				totalAmount: item.total_amount,
+				items: item.items.map((item):TProductItem => ({
+					name: item.product.name,
+					quantity: item.quantity
+				}))
+			}))
+		};
 	}
 
 	static async getById(id: number):Promise<TMember> {
@@ -34,13 +66,13 @@ export class MemberService {
 
 		if (!member) throw ErrorHandler.notFound("Member not found");
 
-		return ({
+		return {
 			id: member.id,
 			username: member.username,
 			phone: member.phone,
 			points: member.points,
 			createdAt: member.created_at
-		});
+		};
 	}
 
 	static async delete(id: number, cashierId: number):Promise<TSuccess> {

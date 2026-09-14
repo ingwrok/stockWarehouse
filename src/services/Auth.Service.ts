@@ -38,10 +38,10 @@ export class AuthService {
 
 		await newUser.save();
 
-		return ({
+		return {
 			username: newUser.username,
 			role: newUser.role
-		})
+		}
 	}
 
 	static async login(data: TLoginQuery, deviceInfo: string):Promise<number> {

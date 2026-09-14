@@ -190,4 +190,20 @@ export default class TransactionRepository {
     });
   }
 
+  static async getByMemberId(memberId: number) {
+    const transactions = await Transaction.repository()
+      .createQueryBuilder(Transaction.table_short_name)
+      .leftJoinAndMapMany(
+        `${Transaction.table_short_name}.items`,
+        TransactionItem,
+        "item",
+        `item.transaction_id = ${Transaction.table_short_name}.id`
+      )
+      .leftJoinAndSelect(`${Transaction.table_short_name}.member`, "member")
+      .leftJoinAndSelect("item.product", "product")
+      .where(`${Transaction.table_short_name}.member_id = :memberId`, { memberId })
+      .getMany() as (Transaction & { member: Member} & { items: (TransactionItem & { product: Product })[] })[];
+
+    return transactions ;
+  }
 }

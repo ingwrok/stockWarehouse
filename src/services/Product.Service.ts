@@ -33,7 +33,7 @@ export class ProductService {
 
 		await product.save()
 
-		return ({
+		return {
 			id: product.id,
 			name: product.name,
 			warehouseQty: product.warehouse_qty,
@@ -41,7 +41,7 @@ export class ProductService {
 			warehouseLocation: product.warehouse_location,
 			shelfLocation: product.shelf_location,
 			price: product.price
-		});
+		};
 	}
 
 	static async getProdcuts(query: TProductLocationQuery):Promise<IProducts> {
@@ -91,7 +91,7 @@ export class ProductService {
 		product.updated_by = cashierId;
 		await product.save();
 
-		return ({
+		return {
 			id: product.id,
 			name: product.name,
 			warehouseQty: product.warehouse_qty,
@@ -99,7 +99,7 @@ export class ProductService {
 			warehouseLocation: product.warehouse_location,
 			shelfLocation: product.shelf_location,
 			price: product.price
-		});
+		};
 	}
 
 	static async upShelf(product_id: number, quantity: number, cashierId: number):Promise<TProduct> {
@@ -115,7 +115,7 @@ export class ProductService {
 
 		await product.save();
 
-		return ({
+		return {
 			id: product.id,
 			name: product.name,
 			warehouseQty: product.warehouse_qty,
@@ -123,7 +123,7 @@ export class ProductService {
 			warehouseLocation: product.warehouse_location,
 			shelfLocation: product.shelf_location,
 			price: product.price
-		});
+		};
 	}
 
 	static async delete(product_id: number, cashierId: number):Promise<TSuccess>{
